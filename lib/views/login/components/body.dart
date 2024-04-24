@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:s3m_mobile/models/user.dart';
 import 'package:s3m_mobile/services/deviceService.dart';
 import 'package:s3m_mobile/views/login/components/background.dart';
-import 'package:s3m_mobile/views/home/main_home/home_screen.dart';
+import 'package:s3m_mobile/views/page/main_home_screen.dart';
 
 import 'package:s3m_mobile/services/authService.dart' as auth_service;
 import 'package:s3m_mobile/services/deviceService.dart' as device_service;
@@ -41,7 +41,7 @@ class _MyWidgetState extends State<Body> {
 
     if (newuser != null) {
       Navigator.pushReplacement(
-          context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, new MaterialPageRoute(builder: (context) => MainHomeScreen()));
     }
   }
 
@@ -60,7 +60,7 @@ class _MyWidgetState extends State<Body> {
           // Save the counter value to persistent storage under the 'counter' key.
           await prefs.setString('username', user.username);
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+              .push(MaterialPageRoute(builder: (context) => MainHomeScreen()));
         }
       }
     }
