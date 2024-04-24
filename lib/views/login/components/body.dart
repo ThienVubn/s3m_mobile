@@ -4,10 +4,12 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:flutter/material.dart';
 
 import 'package:s3m_mobile/models/user.dart';
+import 'package:s3m_mobile/services/deviceService.dart';
 import 'package:s3m_mobile/views/login/components/background.dart';
 import 'package:s3m_mobile/views/home/main_home/home_screen.dart';
 
 import 'package:s3m_mobile/services/authService.dart' as auth_service;
+import 'package:s3m_mobile/services/deviceService.dart' as device_service;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
@@ -21,20 +23,22 @@ class _MyWidgetState extends State<Body> {
   final _formkey = GlobalKey<FormState>();
   User user = User("admin", "SES@2019s3m");
 
-    @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     check_if_already_login();
   }
+
   void check_if_already_login() async {
     var res = await SharedPreferences.getInstance();
     var newuser;
-    if(res.getString('username') != null) {
-       newuser = res.getString('username')!.isNotEmpty ? res.getString('username').toString() : null;
+    if (res.getString('username') != null) {
+      newuser = res.getString('username')!.isNotEmpty
+          ? res.getString('username').toString()
+          : null;
     }
-    
-    print(newuser);
+
     if (newuser != null) {
       Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => HomeScreen()));
