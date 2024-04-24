@@ -1,8 +1,5 @@
 import "package:s3m_mobile/services/commonService.dart";
-import 'package:s3m_mobile/constants/constant.dart';
 import 'package:s3m_mobile/constants/device_api.dart';
-
-const localhost = HOST;
 
 class DeviceService {
   late CommonService _commonService;
