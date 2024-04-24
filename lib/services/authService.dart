@@ -1,9 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:s3m_mobile/models/user.dart';
 import 'package:s3m_mobile/constants/auth_api.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'package:sweet_cookie/sweet_cookie.dart';
 
 class AuthService {
