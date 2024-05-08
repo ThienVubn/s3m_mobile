@@ -38,7 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text( userSES.phone)
+        Text( userSES.phone),
+        Text( userSES.email)
       ],
     );
   }
