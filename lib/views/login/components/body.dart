@@ -21,7 +21,7 @@ class Body extends StatefulWidget {
 
 class _MyWidgetState extends State<Body> {
   final _formkey = GlobalKey<FormState>();
-  User user = User("admin", "SES@2019s3m");
+  User user = User.create("admin", "SES@2019s3m");
 
   @override
   void initState() {
@@ -39,14 +39,15 @@ class _MyWidgetState extends State<Body> {
           : null;
     }
 
-    if (newuser != null) {
-      Navigator.pushReplacement(
-          context, new MaterialPageRoute(builder: (context) => MainHomeScreen()));
-    }
+    // if (newuser != null) {
+    //   Navigator.pushReplacement(
+    //       context, new MaterialPageRoute(builder: (context) => MainHomeScreen(user: user,)));
+    // }
   }
 
   Future loginData(BuildContext context) async {
     var res = await auth_service.AuthService().login(user);
+   
     var data = jsonDecode(res['data']);
     int status = res['status'];
     if (status == 200) {
@@ -60,7 +61,7 @@ class _MyWidgetState extends State<Body> {
           // Save the counter value to persistent storage under the 'counter' key.
           await prefs.setString('username', user.username);
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => MainHomeScreen()));
+              .push(MaterialPageRoute(builder: (context) => MainHomeScreen(user: user,)));
         }
       }
     }

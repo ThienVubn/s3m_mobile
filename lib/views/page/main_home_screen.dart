@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:s3m_mobile/constants/constant.dart';
+import 'package:s3m_mobile/models/user.dart';
 import 'package:s3m_mobile/views/page/home/home_screen.dart';
 import 'package:s3m_mobile/views/page/chart/chart_screen.dart';
+import 'package:s3m_mobile/views/page/profile/profile_screen.dart';
 
 class MainHomeScreen extends StatefulWidget {
-  const MainHomeScreen({super.key});
+  User? user;
+  MainHomeScreen({super.key, required this.user});
 
   @override
   State<MainHomeScreen> createState() => _MainHomeScreenState();
 }
 
 class _MainHomeScreenState extends State<MainHomeScreen> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   int _currentIndex = 0;
+
   List<Widget> body = const [
     Center(
       child: HomeScreen(),
@@ -23,7 +28,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     Center(
       child: Text("Devices_Screen"),
     ),
-    Center (
+    Center(
       child: Text("Notifications_Screen"),
     ),
   ];
@@ -32,15 +37,63 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _key,
+        endDrawer: Drawer(
+          child: ProfileScreen(user: widget.user,)
+        ),
+
+        body: Column(
+          children: [
+            /**Header Information */
+            
+            /**HeaderScreen(user: widget.user, key: _key) */
+            Container(
+              decoration: const BoxDecoration(
+                color: kPrimaryBlueColor_100,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Hello ' + widget.user!.username,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.underline,
+                      decorationStyle: TextDecorationStyle.wavy,
+                    ),
+                  ),
+                  Spacer(),
+                  Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: IconButton(
+                        onPressed: () {
+                          _key!.currentState?.openEndDrawer(); //<-- SEE HERE
+                        },
+                          icon: Icon(Icons.menu),
+                          color: Colors.white,
+                      )),
+                ],
+              ),
+            ),
+
+            /**Display body fragment */
+            SingleChildScrollView(
+              child: Column(
+            children: [
+              body[_currentIndex]
+            ],
+          )),]
+        ),
+
+        /**Bottom Navigation Bar */
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           selectedItemColor: Colors.white,
-          unselectedIconTheme: IconThemeData(
+          unselectedIconTheme: const IconThemeData(
             color: Colors.white60,
           ),
-           unselectedItemColor: Colors.white60,
+          unselectedItemColor: Colors.white60,
           backgroundColor: kPrimaryBlueColor_100,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -55,7 +108,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
               icon: Icon(Icons.devices_rounded),
               label: 'Devices',
             ),
-             BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.notifications_none),
               label: 'Notifications',
             ),
@@ -66,8 +119,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
             });
           },
         ),
-        resizeToAvoidBottomInset: true, // set it to false
-        body: SingleChildScrollView(child: body[_currentIndex]),
+        resizeToAvoidBottomInset: true,
       ),
     );
   }
