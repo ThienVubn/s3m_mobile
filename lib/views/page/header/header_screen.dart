@@ -4,9 +4,9 @@ import 'package:s3m_mobile/constants/constant.dart';
 
 class HeaderScreen extends StatefulWidget {
   User? user;
-  GlobalKey<ScaffoldState>? globalKey = GlobalKey<ScaffoldState>();
+  void Function() onClicked;
 
-  HeaderScreen({super.key, required this.user, this.globalKey});
+  HeaderScreen({super.key, required this.user, required this.onClicked});
 
   @override
   State<HeaderScreen> createState() => _HeaderScreenState();
@@ -39,9 +39,7 @@ class _HeaderScreenState extends State<HeaderScreen> {
           Padding(
               padding: EdgeInsets.all(5.0),
               child: IconButton(
-                onPressed: () {
-                   widget.globalKey!.currentState?.openEndDrawer(); //<-- SEE HERE
-                },
+                onPressed: widget.onClicked,
                 icon: Icon(Icons.menu),
                 color: Colors.white,
               )),

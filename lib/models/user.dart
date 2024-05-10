@@ -1,5 +1,5 @@
 class User {
-  late int _id;
+  late double _id;
 
   late String _username ;
 
@@ -9,13 +9,13 @@ class User {
 
   String _phone = '' ;
 
-  int get id => _id;
+  double get id => _id;
 
   String get username => _username;
 
   String get password => _password;
 
-  set id(int value) {
+  set id(double value) {
     _id = value;
   }
 
@@ -43,11 +43,17 @@ class User {
 
   User.create(this._username, this._password);
 
+  User.createAll(this._id, this._username, this._password, this._email, this._phone);
+
   User.fromUser(User user) {
-    this._id = user._id == null ? 0 : user._id;
-    this._username = user._username == null ? '' : user._username;
-    ;
-    this._password = user._password == null ? '' : user._password;
-    ;
+    _id = user._id;
+    _username = user._username;
+    _password = user._password;
+    _email = user.email;
+    _phone = user.phone;
+  }
+
+  factory User.fromJson(dynamic json) {
+    return User.createAll(json['id'] as double, json['username'] as String, json['password'] as String, json['email'] as String, json['phone'] as String);
   }
 }
