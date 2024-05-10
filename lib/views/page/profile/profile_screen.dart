@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:s3m_mobile/models/user.dart';
 import 'package:s3m_mobile/services/userService.dart' as userService;
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:s3m_mobile/views/login/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   User? user;
@@ -39,7 +41,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       children: [
         Text( userSES.phone),
-        Text( userSES.email)
+        Text( userSES.email),
+         ElevatedButton(
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.remove('username');
+            Navigator.of(context).popUntil(
+            (route) => route.isFirst);
+          },
+          child: const Text('Go back !!'),
+        ),
       ],
     );
   }

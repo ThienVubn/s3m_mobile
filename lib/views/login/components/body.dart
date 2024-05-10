@@ -109,6 +109,8 @@ class _MyWidgetState extends State<Body> {
               width: size.width * 0.7,
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: TextFormField(
+                obscureText: true,
+                obscuringCharacter: "*",
                 controller: TextEditingController(text: user.password),
                 onChanged: (value) {
                   user.password = value;

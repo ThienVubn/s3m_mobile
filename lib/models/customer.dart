@@ -1,12 +1,12 @@
 class Customer {
 
-  late double _customerId;
+  late int _customerId;
 
   late String _customerName;
 
-  double get customerId => _customerId;
+  int get customerId => _customerId;
 
-  set customerId(double value) {
+  set customerId(int value) {
     _customerId = value;
   }
 
@@ -21,6 +21,6 @@ class Customer {
   Customer.createAll(this._customerId, this._customerName);
 
   factory Customer.fromJson(dynamic json) {
-    return Customer.createAll(json['customerId'] as double, json['customerName'] as String);
+    return Customer.createAll(json['customerId'] as int, json['customerName'] as String);
   }
 }
