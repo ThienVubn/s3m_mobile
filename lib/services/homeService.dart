@@ -9,9 +9,9 @@ class HomeService {
   }
 
   //example
-  //  Future<dynamic> listEp(int customerId) async {
-  //   var url = "${HOME_API['LIST_EP']}$customerId/";
-  //   var type = "GET";
-  //   return _commonService.sendRequest(type, url, {});
-  // }
+   Future<dynamic> getView(int customerId, int projectId, int typer) async {
+    var url = "${HOME_API['OVERVIEW']}/$customerId/$projectId/$typer";
+    var type = "GET";
+    return _commonService.sendRequest(type, url, {});
+  }
 }
