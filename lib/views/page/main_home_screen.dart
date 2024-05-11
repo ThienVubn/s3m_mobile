@@ -53,11 +53,9 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     }
     /**Gắn giá trị đầu tiên trong danh sách*/
     if (widget.customer?.customerId != null) {
-      print('Customer is not empty ');
       setState(() {
         customer.customerId = widget.customer!.customerId;
         customer.customerName = widget.customer!.customerName;
-        print(widget.customer?.customerName);
         body = [
           Center(
             child: HomeScreen(customer: widget.customer),
@@ -75,7 +73,6 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       });
     } else {
       if (listCustomer.length > 0) {
-        print('Customer is empty and set value ');
         setState(() {
           customer = Customer.fromCustomer(listCustomer[0]);
           body = [
@@ -141,7 +138,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           /**Header Information */
           HeaderScreen(
               user: widget.user,
-              customer: customer,
+              customer: widget.customer,
               onClicked: onTapSideMenu),
 
           /**Display body fragment */

@@ -38,7 +38,6 @@ class _HeaderScreenState extends State<HeaderScreen> {
   }
 
   Future getCustomer() async {
-    print('Do app have customerId: ' + widget.customer!.customerId.toString());
     var jwt = auth_service.AuthService().getToken();
     Map<String, dynamic> infor = Jwt.parseJwt(jwt.toString());
     if (infor['roles'] != null && infor['roles'].length > 0) {
@@ -51,7 +50,7 @@ class _HeaderScreenState extends State<HeaderScreen> {
         }
       }
     }
-    if (widget.customer?.customerId != 0) {
+    if (widget.customer?.customerId != null) {
       setState(() {
         customer.customerId = widget.customer!.customerId;
         customer.customerName = widget.customer!.customerName;
@@ -63,7 +62,6 @@ class _HeaderScreenState extends State<HeaderScreen> {
         });
       }
     }
-    print('Header_screen: ' + customer.customerName);
   }
 
   void setCustomer(Customer cus) {
