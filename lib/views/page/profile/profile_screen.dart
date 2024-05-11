@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future getUser() async {
     var res = await userService.UserService()
         .getUserByUsername(widget.user!.username);
-    var data = jsonDecode(res['data']);
+    var data = res['data'];
     setState(() {
       userSES.phone = data['phone'];
       userSES.email = data['email'];

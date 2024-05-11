@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:s3m_mobile/services/authService.dart' as auth_service;
 
@@ -6,7 +8,8 @@ class CommonService {
     var token = auth_service.AuthService().getToken();
     Map<String, String> headers = {
       "Content-Type": "application/json",
-      "Authorization": token
+      "Authorization": token,
+      'charset': 'utf-8'
     };
 
     switch (type) {
@@ -24,7 +27,10 @@ class CommonService {
         await http.get(Uri.parse(url.toString()), headers: headers);
 
     if (response.statusCode == 200) {
-      return {'data': response.body, 'status': response.statusCode};
+      return {
+        'data': jsonDecode(Utf8Decoder().convert(response.bodyBytes)),
+        'status': response.statusCode
+      };
     } else {
       throw Exception('Failed to load data');
     }

@@ -20,6 +20,11 @@ class Customer {
 
   Customer.createAll(this._customerId, this._customerName);
 
+  Customer.fromCustomer(Customer customer) {
+      this._customerId = customer._customerId;
+      this._customerName = customer._customerName;
+    }
+
   factory Customer.fromJson(dynamic json) {
     return Customer.createAll(json['customerId'] as int, json['customerName'] as String);
   }

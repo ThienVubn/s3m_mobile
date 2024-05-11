@@ -14,23 +14,22 @@ class ChartScreen extends StatefulWidget {
 }
 
 class _ChartScreenState extends State<ChartScreen> {
-  late List<ChartData> chart;
+  late List<ChartData> chart = [];
   late TooltipBehavior _tooltip;
-  late List<ViewChart> view;
+  late List<ViewChart> view = [];
 
   @override
   void initState() {
     getDataView();
-    chart = [];
-    view = [];
     _tooltip = TooltipBehavior(enable: true);
     super.initState();
+      print(chart.length);
   }
 
   Future getDataView() async {
     var res = await homeService.HomeService().getView(1, 13, 1);
     var respone = res['data'];
-    var data = jsonDecode(respone);
+    var data = (respone);
 
       ViewChart viewChart = ViewChart.fromJson(data);
 
@@ -39,8 +38,10 @@ class _ChartScreenState extends State<ChartScreen> {
     // var vieww = jsonDecode(view.toString());
 
     for (var i in viewChart.listEp) {
-      ChartData chartt = ChartData.fromJson(i);
-      chart.add(chartt);
+       setState(() {
+        ChartData chartt = ChartData.fromJson(i);
+        chart.add(chartt);
+      });
       // }
   }
   }
