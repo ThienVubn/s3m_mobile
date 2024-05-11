@@ -89,6 +89,7 @@ class _BdHomeScreenState extends State<BdHomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {},
                   child: const Text('Điện mặt trời'),
@@ -99,6 +100,7 @@ class _BdHomeScreenState extends State<BdHomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {},
                   child: const Text('Lưới điện'),
@@ -109,6 +111,7 @@ class _BdHomeScreenState extends State<BdHomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {},
                   child: const Text('Điện gió'),
@@ -119,6 +122,7 @@ class _BdHomeScreenState extends State<BdHomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () async {},
                   child: const Text('Pin lưu trữ'),
@@ -129,6 +133,7 @@ class _BdHomeScreenState extends State<BdHomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(width: 10),
               ],
             ),
           ),
