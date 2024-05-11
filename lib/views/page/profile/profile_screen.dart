@@ -32,8 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       userSES.phone = data['phone'];
       userSES.email = data['email'];
     });
-
-    print(userSES.phone);
   }
 
   @override

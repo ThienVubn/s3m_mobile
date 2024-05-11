@@ -23,7 +23,6 @@ class _ChartScreenState extends State<ChartScreen> {
     getDataView();
     _tooltip = TooltipBehavior(enable: true);
     super.initState();
-    print(chart.length);
   }
 
   Future getDataView() async {

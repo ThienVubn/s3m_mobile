@@ -15,8 +15,9 @@ import 'package:s3m_mobile/services/customerService.dart' as customer_Service;
 class HeaderScreen extends StatefulWidget {
   User? user;
   void Function() onClicked;
+  ValueChanged<Customer> changeCustomer;
 
-  HeaderScreen({super.key, required this.user, required this.onClicked});
+  HeaderScreen({super.key, required this.user, required this.onClicked, required this.changeCustomer});
 
   @override
   State<HeaderScreen> createState() => _HeaderScreenState();
@@ -39,7 +40,6 @@ class _HeaderScreenState extends State<HeaderScreen> {
     if (infor['roles'] != null && infor['roles'].length > 0) {
       if (infor['roles'][0] == "ROLE_ADMIN") {
         var res = await customer_Service.CustomerService().getListCustomer();
-        print(res);
         var data = res['data'];
         for (var item in data) {
           Customer cus = Customer.fromJson(item);
@@ -134,7 +134,9 @@ class _HeaderScreenState extends State<HeaderScreen> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(16.0),
                                           child: ElevatedButton(
-                                            onPressed: () async {},
+                                            onPressed: () async {
+                                              widget.changeCustomer(listCustomer[index]);
+                                            },
                                             child: Text(
                                                 '${listCustomer[index].customerName}'),
                                           ),
