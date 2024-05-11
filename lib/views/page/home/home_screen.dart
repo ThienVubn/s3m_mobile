@@ -25,27 +25,14 @@ class _BdHomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    displayUsername();
     getDataView();
     _tooltip = TooltipBehavior(enable: true);
     super.initState();
   }
 
-  void displayUsername() async {
-    user = User.create('','');
-    var res = await SharedPreferences.getInstance();
-    if (res.getString('username') != null) {
-      setState(() {
-        user.username = res.getString('username')!.isNotEmpty
-            ? res.getString('username').toString()
-            : "";
-      });
-    }
-  }
-
   Future getDataView() async {
     chart = [];
-    var res = await homeService.HomeService().getView(1, 13, 1);
+    var res = await homeService.HomeService().getView(widget.customer!.customerId, 13, 1);
     var respone = res['data'];
     var data = respone;
     // view = ViewChart(0, 0, 0, 0, 0, 0, []);

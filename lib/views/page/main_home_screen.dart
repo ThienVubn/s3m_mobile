@@ -16,7 +16,8 @@ import 'package:s3m_mobile/services/customerService.dart' as customer_Service;
 
 class MainHomeScreen extends StatefulWidget {
   User? user;
-  MainHomeScreen({super.key, required this.user});
+  Customer? customer;
+  MainHomeScreen({super.key, required this.user, this.customer});
 
   @override
   State<MainHomeScreen> createState() => _MainHomeScreenState();
@@ -26,7 +27,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   int _currentIndex = 0;
   late Customer customer = Customer.createAll(0, '');
-  late List<Widget> body = body = [ const Center()];
+  late List<Widget> body = body = [const Center()];
 
   @override
   void initState() {
@@ -51,22 +52,48 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       }
     }
     /**Gắn giá trị đầu tiên trong danh sách*/
-    if (listCustomer.length > 0) {
+    if (widget.customer?.customerId != null) {
+      print('Customer is not empty ');
       setState(() {
-        customer = Customer.fromCustomer(listCustomer[0]);
-        body = [Center(
-            child: HomeScreen(customer: listCustomer[0]),
-          ),
+        customer.customerId = widget.customer!.customerId;
+        customer.customerName = widget.customer!.customerName;
+        print(widget.customer?.customerName);
+        body = [
           Center(
+            child: HomeScreen(customer: widget.customer),
+          ),
+          const Center(
             child: ChartScreen(),
           ),
-          Center(
+          const Center(
             child: Text("Devices_Screen"),
           ),
-          Center(
+          const Center(
             child: Text("Notifications_Screen"),
-          ),];
+          ),
+        ];
       });
+    } else {
+      if (listCustomer.length > 0) {
+        print('Customer is empty and set value ');
+        setState(() {
+          customer = Customer.fromCustomer(listCustomer[0]);
+          body = [
+            Center(
+              child: HomeScreen(customer: listCustomer[0]),
+            ),
+            Center(
+              child: ChartScreen(),
+            ),
+            Center(
+              child: Text("Devices_Screen"),
+            ),
+            Center(
+              child: Text("Notifications_Screen"),
+            ),
+          ];
+        });
+      }
     }
   }
 
@@ -83,18 +110,20 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   void setCustomer(Customer cus) {
     setState(() {
       customer = Customer.fromCustomer(cus);
-      body = [Center(
-            child: HomeScreen(customer: customer),
-          ),
-          Center(
-            child: ChartScreen(),
-          ),
-          Center(
-            child: Text("Devices_Screen"),
-          ),
-          Center(
-            child: Text("Notifications_Screen"),
-          ),];
+      body = [
+        Center(
+          child: HomeScreen(customer: customer),
+        ),
+        Center(
+          child: ChartScreen(),
+        ),
+        Center(
+          child: Text("Devices_Screen"),
+        ),
+        Center(
+          child: Text("Notifications_Screen"),
+        ),
+      ];
     });
     Navigator.pop(context);
   }
@@ -112,8 +141,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           /**Header Information */
           HeaderScreen(
               user: widget.user,
-              onClicked: onTapSideMenu,
-              changeCustomer: setCustomer),
+              customer: customer,
+              onClicked: onTapSideMenu),
 
           /**Display body fragment */
           SingleChildScrollView(
