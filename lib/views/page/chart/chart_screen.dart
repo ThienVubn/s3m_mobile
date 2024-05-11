@@ -23,7 +23,7 @@ class _ChartScreenState extends State<ChartScreen> {
     getDataView();
     _tooltip = TooltipBehavior(enable: true);
     super.initState();
-      print(chart.length);
+    print(chart.length);
   }
 
   Future getDataView() async {
@@ -31,19 +31,19 @@ class _ChartScreenState extends State<ChartScreen> {
     var respone = res['data'];
     var data = (respone);
 
-      ViewChart viewChart = ViewChart.fromJson(data);
+    ViewChart viewChart = ViewChart.fromJson(data);
 
     // var resss = respone['listDataPower'];
 
     // var vieww = jsonDecode(view.toString());
 
     for (var i in viewChart.listEp) {
-       setState(() {
+      setState(() {
         ChartData chartt = ChartData.fromJson(i);
         chart.add(chartt);
       });
       // }
-  }
+    }
   }
 
   @override

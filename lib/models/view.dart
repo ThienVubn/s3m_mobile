@@ -1,16 +1,14 @@
-import 'package:s3m_mobile/models/chart.dart';
-
 class ViewChart {
   ViewChart(this.epDay, this.epMonth, this.costMonth, this.numDeviceWarning,
       this.numDeviceOffline, this.coefficient, this.listEp);
 
-  final double epDay;
-  final double epMonth;
-  final double costMonth;
-  final int numDeviceWarning;
-  final int numDeviceOffline;
-  final double coefficient;
-  final List<dynamic> listEp;
+  late double epDay;
+  late double epMonth;
+  late double costMonth;
+  late int numDeviceWarning;
+  late int numDeviceOffline;
+  late double coefficient;
+  late List<dynamic> listEp;
 
   ViewChart.createAll(
       this.epDay,
