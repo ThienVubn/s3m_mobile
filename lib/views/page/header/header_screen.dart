@@ -11,13 +11,16 @@ import 'package:jwt_decode/jwt_decode.dart';
 
 import 'package:s3m_mobile/services/authService.dart' as auth_service;
 import 'package:s3m_mobile/services/customerService.dart' as customer_Service;
+import 'package:s3m_mobile/views/page/home/home_screen.dart';
+import 'package:s3m_mobile/views/page/main_home_screen.dart';
 
 class HeaderScreen extends StatefulWidget {
   User? user;
+  Customer? customer;
   void Function() onClicked;
-  ValueChanged<Customer> changeCustomer;
 
-  HeaderScreen({super.key, required this.user, required this.onClicked, required this.changeCustomer});
+  HeaderScreen(
+      {super.key, required this.user, this.customer, required this.onClicked});
 
   @override
   State<HeaderScreen> createState() => _HeaderScreenState();
@@ -35,6 +38,7 @@ class _HeaderScreenState extends State<HeaderScreen> {
   }
 
   Future getCustomer() async {
+    print('Do app have customerId: ' + widget.customer!.customerId.toString());
     var jwt = auth_service.AuthService().getToken();
     Map<String, dynamic> infor = Jwt.parseJwt(jwt.toString());
     if (infor['roles'] != null && infor['roles'].length > 0) {
@@ -47,11 +51,25 @@ class _HeaderScreenState extends State<HeaderScreen> {
         }
       }
     }
-    if (listCustomer.length > 0) {
+    if (widget.customer?.customerId != 0) {
       setState(() {
-        customer = Customer.fromCustomer(listCustomer[0]);
+        customer.customerId = widget.customer!.customerId;
+        customer.customerName = widget.customer!.customerName;
       });
+    } else {
+      if (listCustomer.length > 0) {
+        setState(() {
+          customer = Customer.fromCustomer(listCustomer[0]);
+        });
+      }
     }
+    print('Header_screen: ' + customer.customerName);
+  }
+
+  void setCustomer(Customer cus) {
+    setState(() {
+      customer = Customer.fromCustomer(cus);
+    });
   }
 
   @override
@@ -124,7 +142,10 @@ class _HeaderScreenState extends State<HeaderScreen> {
                               children: <Widget>[
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
-                                    maxHeight: MediaQuery.of(context).size.height /4.0 *1.5),
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height /
+                                              4.0 *
+                                              1.5),
                                   child: ListView.builder(
                                     itemCount: listCustomer.length,
                                     shrinkWrap: true,
@@ -135,7 +156,17 @@ class _HeaderScreenState extends State<HeaderScreen> {
                                           padding: const EdgeInsets.all(16.0),
                                           child: ElevatedButton(
                                             onPressed: () async {
-                                              widget.changeCustomer(listCustomer[index]);
+                                              setCustomer(listCustomer[index]);
+                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MainHomeScreen(
+                                                            user: widget.user,
+                                                            customer:
+                                                                listCustomer[index])),
+                                              );
                                             },
                                             child: Text(
                                                 '${listCustomer[index].customerName}'),
